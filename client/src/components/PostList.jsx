@@ -6,8 +6,7 @@ import { useSearchParams } from "react-router-dom";
 
 const fetchPosts = async (pageParam, searchParams) => {
   const searchParamsObj = Object.fromEntries([...searchParams]);
-
-  console.log(searchParamsObj);
+  console.log('searchParamsObj ', searchParamsObj);
 
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
     params: { page: pageParam, limit: 10, ...searchParamsObj },
@@ -27,19 +26,26 @@ const PostList = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["posts", searchParams.toString()],
-    queryFn: ({ pageParam = 1 }) => fetchPosts(pageParam, searchParams),
+    queryKey: [
+      "posts", searchParams.toString()  // when we fetch our data, fetch it when searchParams changes
+    ],
+    queryFn: ({ pageParam = 1 }) => fetchPosts(
+      pageParam, searchParams
+    ),
     initialPageParam: 1,
+    // 4:10 mark continued from post controller
     getNextPageParam: (lastPage, pages) =>
       lastPage.hasMore ? pages.length + 1 : undefined,
   });
 
-  // if (status === "loading") return "Loading...";
-  if (isFetching) return "Loading...";
+  // console.log('data ', data)
+
+  if (status === "loading") return "Loading...";
+  // if (isFetching) return "Loading...";
   
 
-  // if (status === "error") return "Something went wrong!";
-  if (error) return "Something went wrong!";
+  if (status === "error") return "Something went wrong!";
+  // if (error) return "Something went wrong!";
 
   const allPosts = data?.pages?.flatMap((page) => page.posts) || [];
 
@@ -56,7 +62,7 @@ const PostList = () => {
       }
     >
       {allPosts.map((post) => (
-        <PostListItem key={post._id} post={post} />
+       <PostListItem key={post._id} post={post} />
       ))}
     </InfiniteScroll>
   );

@@ -9,11 +9,8 @@ const PostMenuActions = ({ post }) => {
   const { getToken } = useAuth();
   const navigate = useNavigate();
 
-  const {
-    isPending,
-    error,
-    data: savedPosts,
-  } = useQuery({
+  // 4:50 mark-ish
+  const { isPending, error, data: savedPosts } = useQuery({
     queryKey: ["savedPosts"],
     queryFn: async () => {
       const token = await getToken();
@@ -53,9 +50,7 @@ const PostMenuActions = ({ post }) => {
       const token = await getToken();
       return axios.patch(
         `${import.meta.env.VITE_API_URL}/users/save`,
-        {
-          postId: post._id,
-        },
+        { postId: post._id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -76,9 +71,7 @@ const PostMenuActions = ({ post }) => {
       const token = await getToken();
       return axios.patch(
         `${import.meta.env.VITE_API_URL}/posts/feature`,
-        {
-          postId: post._id,
-        },
+        { postId: post._id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -137,8 +130,8 @@ const PostMenuActions = ({ post }) => {
                     ? "none"
                     : "black"
                   : isSaved
-                  ? "black"
-                  : "none"
+                    ? "black"
+                    : "none"
               }
             />
           </svg>

@@ -46,15 +46,19 @@ const Upload = ({ children, type, setProgress, setData }) => {
       authenticator={authenticator}
     >
       <IKUpload
+        // fileName="test-upload.png"
         useUniqueFileName
         onError={onError}
         onSuccess={onSuccess}
         onUploadProgress={onUploadProgress}
         className="hidden"
         ref={ref}
-        accept={`${type}/*`}
+        accept={`${type}/*`} // 4:00 mark
       />
-      <div className="cursor-pointer" onClick={() => ref.current.click()}>
+      <div 
+        className="cursor-pointer" 
+        onClick={() => ref.current.click()} // onClick, call the ref in IKUpload
+      >
         {children}
       </div>
     </IKContext>

@@ -1,21 +1,11 @@
-import React from 'react'
+import { SignUp } from "@clerk/clerk-react";
 
 const RegisterPage = () => {
   return (
-    <div>RegisterPage</div>
-  )
-}
+    <div className="flex items-center justify-center h-[calc(100vh-80px)]">
+      <SignUp signInUrl="/login" />
+    </div>
+  );
+};
 
-export default RegisterPage
-
-// import { SignUp } from "@clerk/clerk-react";
-
-// const RegisterPage = () => {
-//   return (
-//     <div className="flex items-center justify-center h-[calc(100vh-80px)]">
-//       <SignUp signInUrl="/login" />
-//     </div>
-//   );
-// };
-
-// export default RegisterPage;
+export default RegisterPage;
